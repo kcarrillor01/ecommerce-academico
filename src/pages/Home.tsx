@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-  stock: number;
-  category: string; // Campo para la categoría
-}
+import ProductCard, { Product } from "../components/ProductCard";
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -32,10 +23,9 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // Agrupa productos por categoría
+    // Agrupa productos por categoría (si no existe, agrupar en "Otros")
     const groups: Record<string, Product[]> = {};
     products.forEach((product) => {
-      // Si no existe el campo "category", agrupar en "Otros"
       const category = product.category || "Otros";
       if (!groups[category]) {
         groups[category] = [];
@@ -53,19 +43,7 @@ const Home = () => {
           <Row className="g-4 mb-5">
             {groupedProducts[category].map((product) => (
               <Col md={3} key={product.id}>
-                <Card>
-                  <Card.Img variant="top" src={product.image} />
-                  <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Text>
-                      Precio: ${product.price.toFixed(2)} <br />
-                      Stock: {product.stock}
-                    </Card.Text>
-                    <Button variant="primary" as={Link as any} to={`/product/${product.id}`}>
-                      Ver Detalle
-                    </Button>
-                  </Card.Body>
-                </Card>
+                <ProductCard product={product} />
               </Col>
             ))}
           </Row>

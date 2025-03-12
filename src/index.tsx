@@ -7,6 +7,8 @@ import { AuthProvider } from "./context/AuthContext"; // Importa el AuthProvider
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CartProvider } from "./context/CartContext";
+import "font-awesome/css/font-awesome.min.css";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
