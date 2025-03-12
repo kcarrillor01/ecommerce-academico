@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { signInWithGoogle } from "../firebase"; // Asegúrate de que esta función esté definida en firebase.ts
+import { signInWithGoogle } from "../firebase";
 
 interface AuthContextProps {
     user: any;

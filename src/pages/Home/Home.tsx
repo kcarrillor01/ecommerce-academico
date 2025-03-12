@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProductCard, { Product } from "../../components/ProductCard/ProductCard";
 import { useAuth } from "../../context/AuthContext";
 import { getFavorites } from "../../services/favoritesServices";
 import CardRow from "../../components/CardRow/CardRow";
-import "./Home.css"; // Importa el CSS adicional para Home
+import "./Home.css";
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [groupedProducts, setGroupedProducts] = useState<Record<string, Product[]>>({});
   const [favorites, setFavorites] = useState<Product[]>([]);
   const { user } = useAuth();
+  // Estado para refrescar favoritos
+  const [favoritesRefresh, setFavoritesRefresh] = useState(0);
+
+  const refreshFavorites = () => setFavoritesRefresh((prev) => prev + 1);
 
   // Obtener todos los productos
   useEffect(() => {
@@ -42,7 +46,7 @@ const Home = () => {
     setGroupedProducts(groups);
   }, [products]);
 
-  // Obtener favoritos del usuario (si está autenticado)
+  // Obtener favoritos del usuario (si está autenticado) y refrescarlos cuando favoritesRefresh cambie
   useEffect(() => {
     const fetchFavorites = async () => {
       if (user) {
@@ -51,7 +55,7 @@ const Home = () => {
       }
     };
     fetchFavorites();
-  }, [user]);
+  }, [user, favoritesRefresh]);
 
   return (
     <Container className="my-5">
@@ -62,7 +66,7 @@ const Home = () => {
           <CardRow>
             {favorites.map((fav) => (
               <div key={fav.id} className="product-container">
-                <ProductCard product={fav} />
+                <ProductCard product={fav} onToggleFavorite={refreshFavorites} />
               </div>
             ))}
           </CardRow>
@@ -76,7 +80,7 @@ const Home = () => {
           <CardRow>
             {groupedProducts[category].map((product) => (
               <div key={product.id} className="product-container">
-                <ProductCard product={product} />
+                <ProductCard product={product} onToggleFavorite={refreshFavorites} />
               </div>
             ))}
           </CardRow>

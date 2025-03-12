@@ -13,7 +13,7 @@ interface SaleItem {
 
 interface Sale {
     id: string;
-    createdAt: any; // Puedes tipificarlo mejor si lo deseas (por ejemplo, Date)
+    createdAt: any;
     total: number;
     items: SaleItem[];
     shippingData: {

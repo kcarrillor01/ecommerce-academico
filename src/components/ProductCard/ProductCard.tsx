@@ -17,9 +17,10 @@ export interface Product {
 
 interface ProductCardProps {
   product: Product;
+  onToggleFavorite?: () => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onToggleFavorite }) => {
   return (
     <Card className="h-100 product-card">
       <Card.Img
@@ -29,13 +30,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         className="product-card-img"
       />
       <Card.Body className="d-flex flex-column">
-        {/* Fila superior: Título y Favorito alineados arriba */}
         <div className="d-flex justify-content-between align-items-start">
           <Card.Title className="mb-0 product-card-title">
             {product.title}
           </Card.Title>
           <FavoriteButton
             product={product}
+            onToggle={onToggleFavorite}
           />
         </div>
         <Card.Text className="mt-2 product-card-text">
@@ -47,10 +48,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <br />
           Stock: {product.stock}
         </Card.Text>
-        {/* Botones en la parte inferior */}
         <div className="mt-auto product-card-buttons">
           <div className="d-flex justify-content-around">
-            <Button variant="success" as={Link as any} to={`/product/${product.id}`}>
+            <Button variant="primary" as={Link as any} to={`/product/${product.id}`}>
               Ver Detalle
             </Button>
             <AddToCartButton product={product} quantity={1} />

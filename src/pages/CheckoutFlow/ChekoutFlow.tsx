@@ -44,7 +44,7 @@ const CheckoutFlow: React.FC = () => {
     };
 
     const finalizeSale = async () => {
-        if (loading) return; // Evitar múltiples ejecuciones
+        if (loading) return;
         setLoading(true);
         try {
             // Actualizar stock de cada producto

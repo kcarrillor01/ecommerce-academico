@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { addFavorite, removeFavorite, getFavorites, } from "../../services/favoritesServices";
+import { addFavorite, removeFavorite, getFavorites } from "../../services/favoritesServices";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import { Product } from "../ProductCard/ProductCard";
 
 interface FavoriteButtonProps {
     product: Product;
+    onToggle?: () => void;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product, onToggle }) => {
     const { user } = useAuth();
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -17,7 +18,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
         const fetchFavorites = async () => {
             if (user) {
                 const favs = await getFavorites(user.uid);
-                const exists = favs.some((p) => p.id === product.id);
+                const exists = favs.some((p: Product) => p.id === product.id);
                 setIsFavorite(exists);
             }
         };
@@ -38,6 +39,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
             setIsFavorite(true);
             toast.success("Producto agregado a favoritos");
         }
+        if (onToggle) onToggle();
     };
 
     return (
@@ -47,7 +49,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
             style={{
                 fontSize: "1.5rem",
                 color: isFavorite ? "red" : "gray",
-                alignSelf: "flex-start", // Forzar alineación al inicio
+                alignSelf: "flex-start",
             }}
         >
             <i className={isFavorite ? "fa fa-heart" : "fa fa-heart-o"} />
