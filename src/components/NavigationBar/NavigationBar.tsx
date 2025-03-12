@@ -10,7 +10,14 @@ function NavigationBar() {
     return (
         <Navbar sticky="top" className="navbar-custom" expand="lg">
             <Container>
-                <Navbar.Brand as={Link} to="/">Dices & Boards</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">
+                    <img
+                        src="/favicon.ico"
+                        alt="Logo"
+                        style={{ width: "40px", height: "40px", marginRight: "10px", objectFit: "cover" }}
+                    />
+                    Dices & Boards
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
