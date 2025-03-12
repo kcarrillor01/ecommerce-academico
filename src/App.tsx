@@ -1,19 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home"; // Puedes mantener tu Home actual o redirigir a Products
-import Products from "./pages/Products";
-import ProductDetailPage from "./pages/ProductDetailPage";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import NavigationBar from "./components/NavigationBar";
-import Cart from "./pages/Cart";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import ProductDetailPage from "./pages/ProductDetail/ProductDetail";
+import NotFound from "./pages/NotFound/NotFound";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import Cart from "./pages/Cart/Cart";
+import Products from "./pages/Products/Products";
 import { useAuth } from "./context/AuthContext";
-import { Navigate, Outlet } from "react-router-dom";
-import AddProductPage from "./pages/addProductPage";
+import "./App.css";
+import AddProductPage from "./pages/AddProductPage/addProductPage";
+import CheckoutFlow from "./pages/CheckoutFlow/ChekoutFlow";
+import MyPurchases from "./pages/MyPurchases/MyPurchases";
 
-// Definición de PrivateRoute para rutas protegidas
+// PrivateRoute para rutas protegidas
 const PrivateRoute = () => {
   const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  return user ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 function App() {
@@ -24,11 +25,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:productId" element={<ProductDetailPage />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/add-product" element={<AddProductPage />} />
-        {/* Rutas protegidas: por ejemplo, carrito */}
+        {/* Rutas protegidas para usuarios autenticados */}
         <Route element={<PrivateRoute />}>
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckoutFlow />} />
+          <Route path="/purchases" element={<MyPurchases />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

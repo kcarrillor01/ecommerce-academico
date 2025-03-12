@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { signInWithGoogle } from "../firebase"; // Asegúrate de que esta función esté definida en firebase.ts
 
 interface AuthContextProps {
     user: any;
+    login: () => Promise<void>;
     logout: () => void;
 }
 
@@ -31,7 +33,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } else {
                 setUser(null);
                 localStorage.removeItem("authToken");
-                navigate("/login");
             }
         });
 
@@ -50,6 +51,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
     }, [auth, navigate]);
 
+    const login = async () => {
+        try {
+            await signInWithGoogle();
+        } catch (error) {
+            console.error("Error al iniciar sesión", error);
+        }
+    };
+
     const logout = async () => {
         await signOut(auth);
         localStorage.removeItem("authToken");
@@ -57,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     return (
-        <AuthContext.Provider value={{ user, logout }}>
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

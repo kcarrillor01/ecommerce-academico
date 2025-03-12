@@ -1,0 +1,33 @@
+.card-row-wrapper {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 4rem;
+}
+
+.card-row {
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  padding: 1rem 0;
+}
+
+.card-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0.8;
+  border: none;
+}
+
+.scroll-button.left {
+  left: 0.5rem;
+}
+
+.scroll-button.right {
+  right: 0.5rem;
+}

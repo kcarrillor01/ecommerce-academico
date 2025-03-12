@@ -15,6 +15,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "bootstrap": "^5.3.3",
+    "emailjs-com": "^3.2.0",
     "firebase": "^11.4.0",
     "font-awesome": "^4.7.0",
     "react": "^19.0.0",

@@ -1,0 +1,29 @@
+.not-found {
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("/public/404error.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.not-found-button {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-30%);
+  background-color: #f35a9b;
+  border: 5px solid #fefcfd;
+  color: #fefcfd;
+
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.not-found-button:hover {
+  background-color: #fefcfd;
+  color: #f35a9b;
+  border: 5px solid #f35a9b;
+}

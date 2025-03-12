@@ -1,0 +1,13 @@
+/* Products.css */
+.products-container {
+  /* Si quieres que el container tenga padding extra o un background especial */
+  padding: 2rem 0;
+}
+
+.products-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Puedes ajustar márgenes para que las cartas se separen bien, pero recuerda que el Row con clase "g-4" ya aplica un gutter */

@@ -1,0 +1,6 @@
+/* Home.css */
+.product-container {
+  display: inline-block;
+  width: 350px; /* Ancho aumentado para las tarjetas */
+  margin-right: 0.5rem;
+}

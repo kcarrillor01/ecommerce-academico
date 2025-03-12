@@ -1,0 +1,42 @@
+/* NavigationBar.css */
+.navbar-custom {
+  background: linear-gradient(135deg, #1d2b64, #f8cdda);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+}
+
+.navbar-custom .navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.navbar-custom .nav-link {
+  font-size: 1.1rem;
+  margin-right: 1rem;
+  color: #fff !important;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #f8cdda !important;
+}
+
+.navbar-custom .dropdown-menu {
+  background-color: #1d2b64;
+  border: none;
+}
+
+.navbar-custom .dropdown-item {
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-custom .dropdown-item:hover {
+  background-color: #f8cdda;
+  color: #1d2b64;
+}
+
+.navbar-custom .btn-link {
+  color: #fff;
+}
