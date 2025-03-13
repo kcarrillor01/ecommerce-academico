@@ -18,46 +18,58 @@ export interface Product {
 interface ProductCardProps {
   product: Product;
   onToggleFavorite?: () => void;
+  disable?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onToggleFavorite }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onToggleFavorite, disable }) => {
   return (
-    <Card className="h-100 product-card">
-      <Card.Img
-        variant="top"
-        src={product.image}
-        alt={product.title}
-        className="product-card-img"
-      />
-      <Card.Body className="d-flex flex-column">
-        <div className="d-flex justify-content-between align-items-start">
-          <Card.Title className="mb-0 product-card-title">
-            {product.title}
-          </Card.Title>
-          <FavoriteButton
-            product={product}
-            onToggle={onToggleFavorite}
-          />
-        </div>
-        <Card.Text className="mt-2 product-card-text">
-          Precio:{" "}
-          {product.price.toLocaleString("es-CO", {
-            style: "currency",
-            currency: "COP",
-          })}
-          <br />
-          Stock: {product.stock}
-        </Card.Text>
-        <div className="mt-auto product-card-buttons">
-          <div className="d-flex justify-content-around">
-            <Button variant="primary" as={Link as any} to={`/product/${product.id}`}>
-              Ver Detalle
-            </Button>
-            <AddToCartButton product={product} quantity={1} />
+    <div className={disable ? "disabled-card" : ""}>
+      <Card className="h-100 product-card">
+        <Card.Img
+          variant="top"
+          src={product.image}
+          alt={product.title}
+          className="product-card-img"
+        />
+        <Card.Body className="d-flex flex-column">
+          <div className="d-flex justify-content-between align-items-start">
+            <Card.Title className="mb-0 product-card-title">
+              {product.title}
+            </Card.Title>
+            <FavoriteButton product={product} onToggle={onToggleFavorite} />
           </div>
-        </div>
-      </Card.Body>
-    </Card>
+          <Card.Text className="fs-5 my-2">
+            {product.category}
+          </Card.Text>
+          <Card.Text className="product-card-text">
+            Precio:{" "}
+            {product.price.toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+            })}
+            <br />
+            {product.stock > 0 ? (
+              <p>Stock: {product.stock}</p>
+            ) : (
+              <p className="text-danger">No hay stock. No sabemos si habrá pronto</p>
+            )}
+          </Card.Text>
+          <div className="mt-auto product-card-buttons">
+            <div className="d-flex justify-content-around">
+              <Button
+                variant="info"
+                as={Link as any}
+                to={`/product/${product.id}`}
+                disabled={disable}
+              >
+                Ver Detalle
+              </Button>
+              <AddToCartButton product={product} quantity={1} />
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 

@@ -6,10 +6,12 @@ import { doc, getDoc, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { toast } from "react-toastify";
 import { emailService } from "../../services/emailService";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutFlow: React.FC = () => {
     const { cart, clearCart } = useCart();
     const { user } = useAuth();
+    const navigate = useNavigate();
     const totalPrice = cart.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
@@ -91,7 +93,7 @@ const CheckoutFlow: React.FC = () => {
             toast.success(
                 `¡Compra realizada exitosamente! Se ha enviado la confirmación a ${shippingData.email}`
             );
-            setStep(1);
+            navigate('/purchases')
         } catch (error) {
             console.error("Error al finalizar la compra", error);
             toast.error("Error al finalizar la compra");

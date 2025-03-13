@@ -6,6 +6,8 @@ import "./NavigationBar.css";
 
 function NavigationBar() {
     const { user, login, logout } = useAuth();
+    console.log(user?.photoURL);
+
 
     return (
         <Navbar sticky="top" className="navbar-custom" expand="lg">
@@ -24,16 +26,20 @@ function NavigationBar() {
                         <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                         <Nav.Link as={Link} to="/products">Productos</Nav.Link>
                         {user && <Nav.Link as={Link} to="/cart">Carrito</Nav.Link>}
-                        {user && <Nav.Link as={Link} to="/purchases">Mis Compras</Nav.Link>}
+                        {user && user.rol === "admin" && (
+                            <Nav.Link as={Link} to="/admin">Administrar</Nav.Link>
+                        )}
                         {user ? (
                             <Dropdown align="end">
                                 <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ padding: 0 }}>
                                     <img
-                                        src={user.photoURL}
+                                        src={"/default-user.jpg"}
                                         alt="Avatar"
                                         className="rounded-circle"
+                                        crossOrigin="anonymous"
                                         style={{ width: "40px", height: "40px", objectFit: "cover" }}
                                     />
+
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={logout}>Salir</Dropdown.Item>

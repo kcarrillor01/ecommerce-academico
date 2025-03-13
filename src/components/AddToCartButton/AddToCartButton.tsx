@@ -19,6 +19,14 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product, quantity }) 
             toast.error("Debes iniciar sesión para agregar productos al carrito");
             return;
         }
+        if (product.stock === 0) {
+            toast.error("Producto sin stock");
+            return;
+        }
+        if (quantity > product.stock) {
+            toast.error("La cantidad solicitada excede el stock disponible");
+            return;
+        }
         addToCart({
             productId: product.id,
             title: product.title,
@@ -30,8 +38,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product, quantity }) 
     };
 
     return (
-        <Button variant="primary" onClick={handleAddToCart}>
-            Añadir al carrito
+        <Button
+            variant="warning"
+            onClick={handleAddToCart}
+            disabled={product.stock === 0 || quantity <= 0}
+        >
+            {product.stock === 0 ? "Sin stock" : "Añadir al carrito"}
         </Button>
     );
 };

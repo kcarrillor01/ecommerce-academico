@@ -17,9 +17,8 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product, onToggle }) =>
     useEffect(() => {
         const fetchFavorites = async () => {
             if (user) {
-                const favs = await getFavorites(user.uid);
-                const exists = favs.some((p: Product) => p.id === product.id);
-                setIsFavorite(exists);
+                const favIds = await getFavorites(user.uid);
+                setIsFavorite(favIds.includes(product.id));
             }
         };
         fetchFavorites();
@@ -35,7 +34,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product, onToggle }) =>
             setIsFavorite(false);
             toast.info("Producto removido de favoritos");
         } else {
-            await addFavorite(user.uid, product);
+            await addFavorite(user.uid, product.id);
             setIsFavorite(true);
             toast.success("Producto agregado a favoritos");
         }

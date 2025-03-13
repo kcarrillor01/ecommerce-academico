@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Container, Button, Row } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProductCard, { Product } from "../../components/ProductCard/ProductCard";
 import { useAuth } from "../../context/AuthContext";
@@ -12,7 +12,7 @@ import "./Home.css";
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [groupedProducts, setGroupedProducts] = useState<Record<string, Product[]>>({});
-  const [favorites, setFavorites] = useState<Product[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const { user } = useAuth();
   // Estado para refrescar favoritos
   const [favoritesRefresh, setFavoritesRefresh] = useState(0);
@@ -46,16 +46,19 @@ const Home = () => {
     setGroupedProducts(groups);
   }, [products]);
 
-  // Obtener favoritos del usuario (si está autenticado) y refrescarlos cuando favoritesRefresh cambie
+  // Obtener IDs de favoritos del usuario (si está autenticado) y refrescarlos cuando favoritesRefresh cambie
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchFavoriteIds = async () => {
       if (user) {
-        const favs = await getFavorites(user.uid);
-        setFavorites(favs);
+        const favIds = await getFavorites(user.uid);
+        setFavoriteIds(favIds);
       }
     };
-    fetchFavorites();
+    fetchFavoriteIds();
   }, [user, favoritesRefresh]);
+
+  // Filtrar productos favoritos a partir de todos los productos y la lista de IDs
+  const favorites = products.filter((product) => favoriteIds.includes(product.id));
 
   return (
     <Container className="my-5">

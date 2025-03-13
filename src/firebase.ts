@@ -20,6 +20,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+// Fuerza la selección de cuenta cada vez que se inicia sesión:
+provider.setCustomParameters({
+  prompt: "select_account",
+});
 export const db = getFirestore(app); // Exporta la variable db
 
 // Función para iniciar sesión con Google y guardar usuario en Firestore
@@ -39,6 +43,7 @@ export const signInWithGoogle = async () => {
         email: user.email,
         photoURL: user.photoURL,
         createdAt: new Date(),
+        rol: "cliente",
       });
     }
 
