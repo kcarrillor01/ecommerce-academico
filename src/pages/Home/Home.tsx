@@ -89,12 +89,6 @@ const Home = () => {
           </CardRow>
         </div>
       ))}
-
-      <div className="text-center mt-4">
-        <Button variant="success" as={Link as any} to="/add-product">
-          Añadir Producto
-        </Button>
-      </div>
     </Container>
   );
 };

@@ -56,67 +56,62 @@ const MyPurchases: React.FC = () => {
     }, [user]);
 
     return (
-        <Container className="mt-4">
-            <h2 className="text-center mb-4">Mis Compras</h2>
-            {loading ? (
-                <p>Cargando compras...</p>
-            ) : sales.length === 0 ? (
-                <p>No tienes compras registradas.</p>
-            ) : (
-                <Row>
-                    {sales.map((sale) => (
-                        <Col md={6} key={sale.id} className="mb-4">
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>
-                                        Compra realizada el{" "}
-                                        {new Date(sale.createdAt.seconds * 1000).toLocaleString()}
-                                    </Card.Title>
-                                    <Card.Text>
-                                        <strong>Total:</strong>{" "}
-                                        {sale.total.toLocaleString("es-CO", {
-                                            style: "currency",
-                                            currency: "COP",
-                                        })}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        <strong>Método de pago:</strong> {sale.paymentMethod}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        <strong>Dirección de envío:</strong> {sale.shippingData.address}
-                                        <br />
-                                        <strong>Teléfono:</strong> {sale.shippingData.phone}
-                                        <br />
-                                        <strong>Correo:</strong> {sale.shippingData.email}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        <strong>Productos:</strong>
-                                        <ul>
-                                            {sale.items.map((item, index) => (
-                                                <li key={index}>
-                                                    <img
-                                                        src={item.image}
-                                                        alt={item.title}
-                                                        width="40"
-                                                        className="me-2"
-                                                    />
-                                                    {item.title} ({item.quantity} x{" "}
-                                                    {item.price.toLocaleString("es-CO", {
-                                                        style: "currency",
-                                                        currency: "COP",
-                                                    })})
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            )}
-        </Container>
-    );
+		<Container className="mt-4">
+			<h2 className="text-center mb-4">Mis Compras</h2>
+			{loading ? (
+				<p>Cargando compras...</p>
+			) : sales.length === 0 ? (
+				<p>No tienes compras registradas.</p>
+			) : (
+				<Row>
+					{sales
+						.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
+						.map((sale) => (
+							<Col md={12} key={sale.id} className="mb-4">
+								<Card>
+									<Card.Body>
+										<Card.Title>Compra realizada el {new Date(sale.createdAt.seconds * 1000).toLocaleString()}</Card.Title>
+										<Card.Text>
+											<strong>Total:</strong>{" "}
+											{sale.total.toLocaleString("es-CO", {
+												style: "currency",
+												currency: "COP",
+											})}
+										</Card.Text>
+										<Card.Text>
+											<strong>Método de pago:</strong> {sale.paymentMethod}
+										</Card.Text>
+										<Card.Text>
+											<strong>Dirección de envío:</strong> {sale.shippingData.address}
+											<br />
+											<strong>Teléfono:</strong> {sale.shippingData.phone}
+											<br />
+											<strong>Correo:</strong> {sale.shippingData.email}
+										</Card.Text>
+										<Card.Text>
+											<strong>Productos:</strong>
+											<ul>
+												{sale.items.map((item, index) => (
+													<li key={index}>
+														<img src={item.image} alt={item.title} width="40" className="me-2" />
+														{item.title} ({item.quantity} x{" "}
+														{item.price.toLocaleString("es-CO", {
+															style: "currency",
+															currency: "COP",
+														})}
+														)
+													</li>
+												))}
+											</ul>
+										</Card.Text>
+									</Card.Body>
+								</Card>
+							</Col>
+						))}
+				</Row>
+			)}
+		</Container>
+	);
 };
 
 export default MyPurchases;
