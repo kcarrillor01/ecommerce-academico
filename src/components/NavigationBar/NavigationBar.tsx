@@ -18,9 +18,9 @@ function NavigationBar() {
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto">
+					<Nav className="w-100 justify-content-end">
 						{user && user.rol === "admin" && (
-							<Nav.Link as={Link} to="/admin">
+							<Nav.Link as={Link} to="/admin" style={{ marginRight: "auto", marginLeft:"2rem" }}>
 								Administrar
 							</Nav.Link>
 						)}
